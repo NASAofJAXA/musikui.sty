@@ -206,7 +206,10 @@
   \setcounter{mk@counter@kake}{0}
   \setcounter{mk@counter@wari}{0}
   \stepcounter{mk@counter@wari}
-  \sbox\mk@product@w@a{\musiwarikakko\hskip\mk@hgap \mk@foreach@cell\mk@put@cell{#1}}
+  \sbox\mk@product@w@a{%
+  \hskip\mk@hgap
+  \vbox{\vss \musiwarikakko\vss}%
+  \hskip\mk@hgap \mk@foreach@cell\mk@put@cell{#1}}
   \sbox\mk@product@w@b{%
       \mk@foreach@cell\mk@put@cell{#2}\copy\mk@product@w@a}%
   \hb@xt@\wd\mk@product@w@b{%
