@@ -4,9 +4,9 @@
 
 %% package declaration
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{musikui}[2018/03/10 v1]
+\ProvidesPackage{musikui}[2018/03/12 v0.2]
 \def\mk@pkgname{musikui}
-\RequirePackage{delimset}
+\RequirePackage{graphicx}
 
 %--------------------------------------- general
 
@@ -98,7 +98,8 @@
 \newcommand*{\musiopsymbol}{$\times$}
 
 %%<)> \musiwarikakko
-\newcommand*{\musiwarikakko}{$\Big)$}
+\newcommand*{\musiwarikakko}{%
+\resizebox{!}{\mk@width}{\big)}}
 %--------------------------------------- cells
 
 %% variables
@@ -211,6 +212,7 @@
   \nointerlineskip%
   \vskip\mk@vgap%
   \mk@sen%
+  \nointerlineskip%
   \copy\mk@product@w@b%
   \nointerlineskip%
   \vskip\mk@vgap}
@@ -236,8 +238,8 @@
   \ifnum \themk@counter@wari=1 \let\mk@product\mk@product@w@b
   \else \let\mk@product\mk@product@k@a \fi
   \hb@xt@\wd\mk@product{\hfil%
-  \vrule\@height\mk@rule width \wd\mk@product@R}%
-  \vskip -0.3em%
+  \vrule\@height\mk@rule width \wd\mk@product@R}%}%
+%  \vskip -0.3em%
   \vskip\mk@vgap}
 
 %% \mk@finalize
