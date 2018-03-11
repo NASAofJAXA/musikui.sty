@@ -25,14 +25,11 @@
 \newif\ifmk@graphicx
 \newbox\mk@product
 \newbox\mk@product@k@a
-\newbox\mk@product@k@b
 \newbox\mk@product@w@a
 \newbox\mk@product@w@b
 \newbox\mk@whole
 \newbox\mk@boxa
 \newbox\mk@boxb
-\newcounter{mk@counter@kake}
-\setcounter{mk@counter@kake}{0}
 \newcounter{mk@counter@wari}
 \setcounter{mk@counter@wari}{0}
 \let\mk@cell@proc\relax
@@ -184,9 +181,7 @@
 
 %% \mk@kake{<multiplicand>}{<multiplier>}{<product>}
 \def\mk@kake#1#2#3{%
-  \setcounter{mk@counter@kake}{0}
   \setcounter{mk@counter@wari}{0}
-  \stepcounter{mk@counter@kake}
   \sbox\mk@product@k@a{%
     \hskip\mk@hgap \mk@foreach@cell\mk@put@cell{#3}}%
     \let\mk@product\mk@product@k@a
@@ -204,12 +199,9 @@
 
 %% \mk@wari{<multiplicand>}{<multiplier>}{<product>}
 \def\mk@wari#1#2#3{%
-  \setcounter{mk@counter@kake}{0}
   \setcounter{mk@counter@wari}{0}
   \stepcounter{mk@counter@wari}
   \sbox\mk@product@w@a{%
-  \hskip\mk@hgap
-  %\vbox{\vss\musiwarikakko\vss}%
   \musiwarikakko
   \hskip\mk@hgap \mk@foreach@cell\mk@put@cell{#1}}
   \sbox\mk@product@w@b{%
