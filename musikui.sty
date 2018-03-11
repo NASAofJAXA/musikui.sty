@@ -7,6 +7,7 @@
 \ProvidesPackage{musikui}[2018/03/10 v1]
 \def\mk@pkgname{musikui}
 %\RequirePackage{graphicx}
+\RequirePackage{delimset}
 
 %--------------------------------------- general
 
@@ -101,7 +102,7 @@
 \newcommand*{\musiopsymbol}{$\times$}
 
 %%<)> \musiwarikakko
-\newcommand*{\musiwarikakko}{\Big)}
+\newcommand*{\musiwarikakko}{$\Big)$}
 %\newcommand*{\musiwarikakko}{%
 %  \raisebox{0.3em}{\scalebox{1}[1.5]{)}}}
 %--------------------------------------- cells
@@ -215,7 +216,7 @@
   \musiwarikakko
   \hskip\mk@hgap \mk@foreach@cell\mk@put@cell{#1}}
   \sbox\mk@product@w@b{%
-      \mk@foreach@cell\mk@put@cell{#2}\copy\mk@product@w@a}%
+     \mk@foreach@cell\mk@put@cell{#2}\copy\mk@product@w@a}%
   \hb@xt@\wd\mk@product@w@b{%
     \hfil \mk@foreach@cell\mk@put@cell{#3}}%
   \nointerlineskip%
