@@ -4,9 +4,8 @@
 
 %% package declaration
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{musikui}[2018/03/12 v0.2]
+\ProvidesPackage{musikui}[2018/03/10 v1]
 \def\mk@pkgname{musikui}
-\RequirePackage{graphicx}
 
 %--------------------------------------- general
 
@@ -25,11 +24,14 @@
 \newif\ifmk@graphicx
 \newbox\mk@product
 \newbox\mk@product@k@a
+\newbox\mk@product@k@b
 \newbox\mk@product@w@a
 \newbox\mk@product@w@b
 \newbox\mk@whole
 \newbox\mk@boxa
 \newbox\mk@boxb
+\newcounter{mk@counter@kake}
+\setcounter{mk@counter@kake}{0}
 \newcounter{mk@counter@wari}
 \setcounter{mk@counter@wari}{0}
 \let\mk@cell@proc\relax
@@ -98,8 +100,7 @@
 \newcommand*{\musiopsymbol}{$\times$}
 
 %%<)> \musiwarikakko
-\newcommand*{\musiwarikakko}{%
-\resizebox{!}{\mk@width}{\big)}}
+\newcommand*{\musiwarikakko}{\Big)}
 %--------------------------------------- cells
 
 %% variables
@@ -182,7 +183,9 @@
 
 %% \mk@kake{<multiplicand>}{<multiplier>}{<product>}
 \def\mk@kake#1#2#3{%
+  \setcounter{mk@counter@kake}{0}
   \setcounter{mk@counter@wari}{0}
+  \stepcounter{mk@counter@kake}
   \sbox\mk@product@k@a{%
     \hskip\mk@hgap \mk@foreach@cell\mk@put@cell{#3}}%
     \let\mk@product\mk@product@k@a
@@ -200,22 +203,20 @@
 
 %% \mk@wari{<multiplicand>}{<multiplier>}{<product>}
 \def\mk@wari#1#2#3{%
+  \setcounter{mk@counter@kake}{0}
   \setcounter{mk@counter@wari}{0}
   \stepcounter{mk@counter@wari}
-  \sbox\mk@product@w@a{%
-  \musiwarikakko
-  \hskip\mk@hgap \mk@foreach@cell\mk@put@cell{#1}}
+  \sbox\mk@product@w@a{\musiwarikakko\hskip\mk@hgap \mk@foreach@cell\mk@put@cell{#1}}
   \sbox\mk@product@w@b{%
-     \mk@foreach@cell\mk@put@cell{#2}\copy\mk@product@w@a}%
+      \mk@foreach@cell\mk@put@cell{#2}\copy\mk@product@w@a}%
   \hb@xt@\wd\mk@product@w@b{%
     \hfil \mk@foreach@cell\mk@put@cell{#3}}%
   \nointerlineskip%
   \vskip\mk@vgap%
   \mk@sen%
-  \nointerlineskip%
+%  \vskip-\mk@vgp
   \copy\mk@product@w@b%
-  \nointerlineskip%
-  \vskip\mk@vgap}
+  \nointerlineskip}
 
 %% \mk@musi{<content>}{<trail-count>}
 \def\mk@musi#1#2{%
@@ -238,8 +239,8 @@
   \ifnum \themk@counter@wari=1 \let\mk@product\mk@product@w@b
   \else \let\mk@product\mk@product@k@a \fi
   \hb@xt@\wd\mk@product{\hfil%
-  \vrule\@height\mk@rule width \wd\mk@product@R}%}%
-%  \vskip -0.3em%
+  \vrule\@height\mk@rule width \wd\mk@product@R}%
+  \vskip -0.3em%
   \vskip\mk@vgap}
 
 %% \mk@finalize
@@ -251,6 +252,7 @@
 
 %%<*> \begin{musikui}...\end{musikui}
 \newenvironment{musikui}{%
+  \leavevmode
   \mk@initialize
   \setbox\mk@whole\vbox\bgroup}%
  {\mk@finalize
