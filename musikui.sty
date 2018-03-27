@@ -115,14 +115,22 @@
 \def\mk@noneaten#1{%
   \mk@plain@box{\mk@fit@width{\mk@width}{#1}}}
 
-%% \mk@halfeaten{<textL>}{<textR>}
-\def\mk@halfeaten#1#2{%
+%% \mk@halfeaten{<text>}
+\def\mk@halfeaten#1{%
+  \mk@frame@box{\mk@fit@width{\mk@halfwidth}{#1}}}
+
+%% \mk@halfnoneaten{<text>}
+\def\mk@halfnoneaten#1{%
+  \mk@plain@box{\mk@fit@width{\mk@halfwidth}{#1}}}
+
+%% \mk@hhalfeaten{<textL>}{<textR>}
+\def\mk@hhalfeaten#1#2{%
   \mk@frame@box{\mk@fit@width{\mk@halfwidth}{#1}}%
   \kern-\mk@rule
   \mk@frame@box{\mk@fit@width{\mk@halfwidth}{#2}}}
 
-%% \mk@halfnoneaten{<textL>}{<textR>}
-\def\mk@halfnoneaten#1#2{%
+%% \mk@hhalfnoneaten{<textL>}{<textR>}
+\def\mk@hhalfnoneaten#1#2{%
   \mk@plain@box{\mk@fit@width{\mk@halfwidth}{#1}}%
   \kern-\mk@rule
   \mk@plain@box{\mk@fit@width{\mk@halfwidth}{#2}}}
@@ -166,6 +174,8 @@
   \let\noneaten\mk@noneaten
   \let\halfeaten\mk@halfeaten
   \let\halfnoneaten\mk@halfnoneaten
+  \let\hhalfeaten\mk@hhalfeaten
+  \let\hhalfnoneaten\mk@hhalfnoneaten
   \let\kake\mk@kake
   \let\wari\mk@wari
   \let\musi\mk@musi
@@ -252,7 +262,6 @@
 
 %%<*> \begin{musikui}...\end{musikui}
 \newenvironment{musikui}{%
-  \leavevmode
   \mk@initialize
   \setbox\mk@whole\vbox\bgroup}%
  {\mk@finalize
