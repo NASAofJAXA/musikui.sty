@@ -24,10 +24,10 @@
 \newif\ifmk@g@box@used
 \newif\ifmk@graphicx
 \newbox\mk@product
-\newbox\mk@product@k@a
-\newbox\mk@product@k@b
-\newbox\mk@product@w@a
-\newbox\mk@product@w@b
+\newbox\mk@product@a
+\newbox\mk@product@b
+\newbox\mk@quotient@a
+\newbox\mk@quotient@b
 \newbox\mk@whole
 \newbox\mk@boxa
 \newbox\mk@boxb
@@ -197,9 +197,9 @@
   \setcounter{mk@counter@kake}{0}
   \setcounter{mk@counter@wari}{0}
   \stepcounter{mk@counter@kake}
-  \sbox\mk@product@k@a{%
+  \sbox\mk@product@a{%
     \hskip\mk@hgap \mk@foreach@cell\mk@put@cell{#3}}%
-    \let\mk@product\mk@product@k@a
+    \let\mk@product\mk@product@a
   \hb@xt@\wd\mk@product{%
     \hfil \mk@foreach@cell\mk@put@cell{#1}}%
   \nointerlineskip
@@ -212,28 +212,28 @@
   \hrule\@height\mk@rule\@depth\z@
   \vskip\mk@vgap}
 
-%% \mk@wari{<multiplicand>}{<multiplier>}{<product>}
+%% \mk@wari{<dividend>}{<divide>}{<quotient>}
 \def\mk@wari#1#2#3{%
   \setcounter{mk@counter@kake}{0}
   \setcounter{mk@counter@wari}{0}
   \stepcounter{mk@counter@wari}
-  \sbox\mk@product@w@a{\musiwarikakko\hskip\mk@hgap \mk@foreach@cell\mk@put@cell{#1}}
-  \sbox\mk@product@w@b{%
-      \mk@foreach@cell\mk@put@cell{#2}\copy\mk@product@w@a}%
-  \hb@xt@\wd\mk@product@w@b{%
+  \sbox\mk@quotient@a{\musiwarikakko\hskip\mk@hgap \mk@foreach@cell\mk@put@cell{#1}}
+  \sbox\mk@quotient@b{%
+      \mk@foreach@cell\mk@put@cell{#2}\copy\mk@quotient@a}%
+  \hb@xt@\wd\mk@quotient@b{%
     \hfil \mk@foreach@cell\mk@put@cell{#3}}%
   \nointerlineskip%
   \vskip\mk@vgap%
   \mk@sen%
 %  \vskip-\mk@vgp
-  \copy\mk@product@w@b%
+  \copy\mk@quotient@b%
   \nointerlineskip}
 
 %% \mk@musi{<content>}{<trail-count>}
 \def\mk@musi#1#2{%
   \ifvoid\mk@product\else
-  {\ifnum \themk@counter@wari=1 \let\mk@product\mk@product@w@b
-  \else \let\mk@product\mk@product@k@a \fi
+  {\ifnum \themk@counter@wari=1 \let\mk@product\mk@quotient@b
+  \else \let\mk@product\mk@product@a \fi
     \hb@xt@\wd\mk@product{%
       \hfil \mk@foreach@cell\mk@put@cell{#1}%
       \advance\mk@width2\mk@rule
@@ -245,10 +245,10 @@
 
 %% \mk@sen
 \def\mk@sen{%
-  \ifnum \themk@counter@wari=1 \let\mk@product@R\mk@product@w@a
-  \else \let\mk@product@R\mk@product@k@a \fi
-  \ifnum \themk@counter@wari=1 \let\mk@product\mk@product@w@b
-  \else \let\mk@product\mk@product@k@a \fi
+  \ifnum \themk@counter@wari=1 \let\mk@product@R\mk@quotient@a
+  \else \let\mk@product@R\mk@product@a \fi
+  \ifnum \themk@counter@wari=1 \let\mk@product\mk@quotient@b
+  \else \let\mk@product\mk@product@a \fi
   \hb@xt@\wd\mk@product{\hfil%
   \vrule\@height\mk@rule width \wd\mk@product@R}%
   \vskip -0.3em%
@@ -257,7 +257,7 @@
 %% \mk@finalize
 \def\mk@finalize{%
 %\typeout{size=(\the\ht\mk@product+\the\dp\mk@product)x\the\wd\mk@product}%
-  \box\mk@product@k@a}
+  \box\mk@product@a}
 
 %--------------------------------------- public interface
 
