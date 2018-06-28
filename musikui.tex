@@ -1,0 +1,214 @@
+%LuaLaTeX
+\documentclass[a4paper]{article}
+\usepackage{luatexja}
+\usepackage{musikui}
+\usepackage{listings}
+\usepackage[pdfencoding=auto]{hyperref}
+\usepackage{longtable}
+\usepackage{shortvrb}
+\MakeShortVerb{\|}
+\newcommand{\Meta}[1]{$\langle$\mbox{}\nobr#1\nobr\mbox{}$\rangle$}
+\newcommand{\Note}{\par\noindent ※}
+\newcommand{\Means}{：\ }
+\newcommand{\nobr}{\nolinebreak[4]}
+\newcommand*{\PKN}[1]{\textsf{#1}}
+
+\title{The \PKN{musikui} package v1}
+\author{Naoki Kaneko}
+\date{2018/04/25}
+\begin{document}
+\maketitle
+
+This package is for easy expression of arithmetical restorations with \LaTeX.
+
+\begin{center}
+\begin{musikui}
+\wari{\eaten&\eaten&\eaten&\eaten&\eaten&\eaten&\eaten&\eaten}
+{\eaten&\eaten&\eaten}
+{\eaten&7&\eaten&\eaten&\eaten}
+\musi{\eaten&\eaten&\eaten&\eaten}{4}
+\sen
+\musi{\eaten&\eaten&\eaten}{3}
+\musi{\eaten&\eaten&\eaten}{3}
+\sen
+\musi{\eaten&\eaten&\eaten&\eaten}{2}
+\musi{\eaten&\eaten&\eaten}{2}
+\sen
+\musi{\eaten&\eaten&\eaten&\eaten}{0}
+\musi{\eaten&\eaten&\eaten&\eaten}{0}
+\sen
+\musi{0}{0}
+\end{musikui}
+\end{center}
+
+The package is maintained on GitHub:
+\begin{itemize}
+\item \url{https://github.com/puripuri2100/musikui}
+\end{itemize}
+\section{Package read}
+Read using |\usepackage| command. There is no option.
+
+\begin{quote}
+|\usepackage{musikui}|
+\end{quote}
+\section{Dependent package}
+\PKN{graphics} package
+
+\section{License}
+The MIT License
+
+\section{Provide command}
+\subsection{Commands related to composition}
+\begin{quote}
+|\kake{|\Meta{multiplicand}|}{|\Meta{multiplier}|}{|\Meta{product}|}|\\
+|\wari{|\Meta{dividend}|}{|\Meta{divide}|}{|\Meta{quotient}|}|\\
+|\musi{|\Meta{holes}|}{|\Meta{distance from the right end}|}|\\
+|\sen|\\
+|\bubunsen{|\Meta{length}|}{|\Meta{distance from the right end}|}|
+\end{quote}
+
+\subsection{Commands related to holes}
+\begin{quote}
+|\eaten{|\Meta{numbers etc.}|}|\\
+|\noneaten{|\Meta{numbers etc.}|}|\\
+|\halfeaten{|\Meta{numbers etc.}|}|\\
+|\halfnoneaten{|\Meta{numbers etc.}|}|\\
+|\hhalfeaten{|\Meta{numbers etc.}|}|\\
+|\hhalfnoneaten{|\Meta{numbers etc.}|}|
+\end{quote}
+
+\section{The role of each command}
+The role of each command is shown in Table \ref{yakuwari}.
+\begin{longtable}[h]{rp{23em}}
+\caption{\label{yakuwari}}\\
+|\kake|&Outputs \Meta{multiplicand},\Meta{multiplier} and \Meta{product} of multiplication arithmetical restorations calculation.\\
+|\wari|&Outputs \Meta{dividend},\Meta{divide} and \Meta{quotient} of division arithmetical restorations calculation.\\
+|\musi| &Outputs \Meta{holes},\Meta{distance from the right end}.\\
+|\sen|&line\\
+|\bubunsen|&Line of the specified length\\
+|\eaten|&normal hole\\
+|\noneaten| &hole without a line \\
+|\halfeaten| &Half the width hole of \verb|\eaten|.\\
+|\halfnoneaten| &Hole without a line with half width of  \verb|\eaten|.\\
+|\hhalfeaten| &Two holes with |\harleaten| side by side.\\
+|\hhalfnoneaten| &|\hhalfeaten| line without a hole
+\end{longtable}
+
+\section{Notation}
+Use one musikui environment per an arithmetical restorations.
+For the representation part of the hole, a hole and a hole (or a number) are connected by  ``|&|".
+After using |\kake| or |\wari|, you just line |\musi| and |\sen| like the hole counting you want to express.
+An example of division and multiplication is given below.
+
+\begin{longtable}[h]{lr}
+\begin{minipage}{0.7\hsize}
+\begin{verbatim}
+\begin{musikui}
+\kake{8&\eaten&6&\eaten}
+{\eaten&\eaten}
+{\eaten&\eaten&\eaten&\eaten&\eaten}
+\musi{\eaten&6&\eaten&\eaten&\eaten}{0}
+\musi{\eaten&\eaten&\eaten&6}{1}
+\sen
+\end{musikui}
+
+\end{verbatim}
+\end{minipage}
+&
+\begin{minipage}{0.4\hsize}
+\begin{musikui}
+\kake{8&\eaten&6&\eaten}
+{\eaten&\eaten}
+{\eaten&\eaten&\eaten&\eaten&\eaten}
+\musi{\eaten&6&\eaten&\eaten&\eaten}{0}
+\musi{\eaten&\eaten&\eaten&6}{1}
+\sen
+\end{musikui}
+\end{minipage}
+\\\hline
+\begin{minipage}{0.7\hsize}
+\begin{verbatim}
+
+\begin{musikui}
+\wari{\eaten&\eaten&\eaten&\eaten}
+{\eaten&\eaten}
+{\eaten&\eaten}
+\musi{\eaten&\eaten}{1}
+\sen
+\musi{1&\eaten}{0}
+\musi{\eaten&\eaten}{0}
+\sen
+\musi{1}{0}
+\end{musikui}
+
+\end{verbatim}
+\end{minipage}
+&
+\begin{minipage}{0.4\hsize}
+\begin{musikui}
+\wari{\eaten&\eaten&\eaten&\eaten}
+{\eaten&\eaten}
+{\eaten&\eaten}
+\musi{\eaten&\eaten}{1}
+\sen
+\musi{1&\eaten}{0}
+\musi{\eaten&\eaten}{0}
+\sen
+\musi{1}{0}
+\end{musikui}
+\end{minipage}
+\\\hline
+\begin{minipage}{0.7\hsize}
+\begin{verbatim}
+
+\begin{musikui}
+\wari{\eaten{1}&\eaten{0}&\eaten{0}&\eaten{2}}
+{\eaten{1}&\eaten{1}}
+{\eaten{9}&\eaten{1}}
+\musi{\eaten{9}&\eaten{9}}{1}
+\bubunsen{4}{0}
+\musi{1&\eaten{2}}{0}
+\musi{\eaten{1}&\eaten{1}}{0}
+\bubunsen{2}{0}
+\musi{1}{0}
+\end{musikui}
+
+\end{verbatim}
+\end{minipage}
+&
+\begin{minipage}{0.4\hsize}
+\begin{musikui}
+\wari{\eaten{1}&\eaten{0}&\eaten{0}&\eaten{2}}
+{\eaten{1}&\eaten{1}}
+{\eaten{9}&\eaten{1}}
+\musi{\eaten{9}&\eaten{9}}{1}
+\bubunsen{4}{0}
+\musi{1&\eaten{2}}{0}
+\musi{\eaten{1}&\eaten{1}}{0}
+\bubunsen{2}{0}
+\musi{1}{0}
+\end{musikui}
+\end{minipage}
+\end{longtable}
+
+\section{Customize}
+You can change the value of arithmetical restorations using \verb|\renewcommand*|.
+
+|\renewcommand*{|\Meta{command name}|}{|\Meta{value}|}|
+
+The values whose roles and default values can be changed are shown in Table \ref{kiteiti}.
+
+\begin{longtable}[h]{lll}
+\caption{\label{kiteiti}}\\
+Command name&Role&Default value \\ \hline
+|\musiwidth|&hole width&1.2em\\
+|\musiheight|&hole height&0.96em\\
+|\musidepth|&hole depth&0.24em\\
+|\musihgap|&distance between hole and hole&0.4em\\
+|\musivgap|&distance between hole and line&0.4em\\
+|\musirule|&line width&0.4pt\\
+|\musiopsymbol|&multiplication sign&\verb|$\times$|\\
+|\musiwarikakko|&divide symbol&\verb|\Big)|
+\end{longtable}
+
+\end{document}
